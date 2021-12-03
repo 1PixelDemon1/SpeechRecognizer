@@ -26,19 +26,15 @@ class mywindow(QtWidgets.QMainWindow):
         self.fill_plots()
 
     def fill_plots(self):
-        for i in range(8, 12):
+        for i in range(6, 12):
             self.plotLayout.addWidget(self._get_plot(f"resources/gen-{i}.wav"))
 
-        figure = plt.figure()
-        canvas = FigureCanvas(figure)
-        ax = figure.add_subplot()
-        ax.plot(audio_handler.produce_combined_wav([f"resources/gen-{i}.wav" for i in range(8, 12)], "resources/result.wav"))
-        ax.axis("off")
-        figure.set_facecolor(globals.PLOT_FACE_COLOR)
-        canvas.setMinimumWidth(round(canvas.frameGeometry().width() / 2))
+        audio_handler.produce_combined_wav([f"resources/gen-{i}.wav" for i in range(6, 12)], "resources/result.wav")
+
+        res_plot = self._get_plot("resources/result.wav")
 
         self.wavLayout.addLayout(self.plotLayout)
-        self.wavLayout.addWidget(canvas)
+        self.wavLayout.addWidget(res_plot)
         w = QWidget()
         w.setLayout(self.wavLayout)
         self.ui.scrollArea.setWidget(w)
