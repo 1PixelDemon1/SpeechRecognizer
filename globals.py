@@ -1,1 +1,2 @@
 PLOT_FACE_COLOR = (255/255, 255/255, 255/255)
+RESULT_DESTINATION = "resources/result.wav"

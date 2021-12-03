@@ -8,7 +8,9 @@ import matplotlib.pyplot as plt
 import audio_handler
 import globals
 from main_window import Ui_MainWindow
+import plot_handler
 import sys
+
 
 
 class mywindow(QtWidgets.QMainWindow):
@@ -22,36 +24,39 @@ class mywindow(QtWidgets.QMainWindow):
 
         self.plotLayout = QHBoxLayout()
         self.wavLayout = QVBoxLayout()
+        self.res_plot = None
+        self.res_audio_axis = None
 
-        self.fill_plots()
+    # Wav only.
+    def fill_plots(self, files):
+        self._clear_layout(self.plotLayout)
+        for file in files:
+            self.plotLayout.addWidget(plot_handler.get_plot(file))
+        self.update_plot(files)
 
-    def fill_plots(self):
-        for i in range(6, 12):
-            self.plotLayout.addWidget(self._get_plot(f"resources/gen-{i}.wav"))
-
-        audio_handler.produce_combined_wav([f"resources/gen-{i}.wav" for i in range(6, 12)], "resources/result.wav")
-
-        res_plot = self._get_plot("resources/result.wav")
-
+    def update_plot(self, files):
+        audio_handler.produce_combined_wav(files, globals.RESULT_DESTINATION)
+        self.res_plot = plot_handler.get_plot(globals.RESULT_DESTINATION)
+        self.res_audio_axis = self.res_plot.figure.get_axes()[0].twinx()
+        self.res_audio_axis.axis("off")
+        self._clear_layout(self.wavLayout)
         self.wavLayout.addLayout(self.plotLayout)
-        self.wavLayout.addWidget(res_plot)
+        self.wavLayout.addWidget(self.res_plot)
         w = QWidget()
         w.setLayout(self.wavLayout)
         self.ui.scrollArea.setWidget(w)
 
-    def _get_plot(self, file):
-        figure = plt.figure()
-        canvas = FigureCanvas(figure)
-        ax = figure.add_subplot()
-        ax.plot(audio_handler.get_data_from_wav(file)[1])
-        ax.axis("off")
-        figure.set_facecolor(globals.PLOT_FACE_COLOR)
-        canvas.setMinimumWidth(round(canvas.frameGeometry().width() / 2))
-        return canvas
+    def _clear_layout(self, layout):
+        for i in reversed(range(layout.count())):
+            try:
+                layout.itemAt(i).widget().setParent(None)
+            except:
+                layout.itemAt(i).layout().setParent(None)
 
 
 app = QtWidgets.QApplication([])
 application = mywindow()
+application.fill_plots([f"resources/gen-{i}.wav" for i in range(6, 12)])
+plot_handler.draw_audio_line_at(application.res_audio_axis, 4000)
 application.show()
-
 sys.exit(app.exec())
