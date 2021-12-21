@@ -8,13 +8,13 @@ import speeker_thread
 import audio_handler
 import audio_line_thread
 import globals
+import text_decoder
 from main_window import Ui_MainWindow
 import plot_handler
 import sys
 
 
 class mywindow(QtWidgets.QMainWindow):
-
     def __init__(self):
         super(mywindow, self).__init__()
         self.ui = Ui_MainWindow()
@@ -43,7 +43,6 @@ class mywindow(QtWidgets.QMainWindow):
         self._clear_layout(self.wavLayout)
         self.wavLayout.addLayout(self.plotLayout)
         self.wavLayout.addWidget(self.res_plot)
-
         w = QWidget()
         w.setLayout(self.wavLayout)
         self.ui.scrollArea.setWidget(w)
@@ -56,6 +55,8 @@ class mywindow(QtWidgets.QMainWindow):
                 layout.itemAt(i).layout().setParent(None)
 
     def _start_play(self):
+        self.fill_plots(text_decoder.decode(self.ui.plainTextEdit.toPlainText()))
+
         audio_line_thread.scroller(self.ui.scrollArea,
                                    audio_handler.get_plot_data_from_wav(globals.RESULT_DESTINATION)).start()
 
@@ -64,7 +65,7 @@ class mywindow(QtWidgets.QMainWindow):
 
 app = QtWidgets.QApplication([])
 application = mywindow()
-application.fill_plots([f"resources/gen-{i}.wav" for i in range(6, 12)])
+# application.fill_plots([f"resources/gen-{i}.wav" for i in range(6, 12)])
 
 application.show()
 sys.exit(app.exec())
