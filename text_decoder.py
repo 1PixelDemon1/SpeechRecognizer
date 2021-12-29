@@ -32,8 +32,30 @@ _temp = {
     "ю": "gen-37.wav",
     "я": "gen-38.wav",
     "ё": "gen-40.wav",
+    "на": "gen-37.wav",
+    "дороге": "gen-38.wav",
+    "на дороге": "on_road.wav",
+
 }
+
+splitters = [".", ",", " ", ";", ":"]
+
+# На дороге было тихо
+# на
+# дороге
+# на дороге
 
 
 def decode(text):
-    return list("resources/" + _temp[name.lower()] for name in text)
+    filenames = []
+    file_dict = {}
+    text = text.lower()
+    for key in sorted(_temp.keys(), key=len, reverse=True):
+        while ~(ind := text.find(key)):
+            file_dict[ind] = key
+            text = text.replace(key, "_"*len(key), 1)
+
+    for i in sorted(file_dict):
+        filenames.append(_temp[file_dict[i]])
+
+    return [r"resources/" + file_name for file_name in filenames]
