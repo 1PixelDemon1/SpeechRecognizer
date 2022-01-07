@@ -15,9 +15,3 @@ def get_plot(file):
     canvas.setMinimumWidth(round(canvas.frameGeometry().width() / 2))
     return canvas
 
-
-def draw_audio_line_at(ax, time_stamp, clear=True):
-    if clear:
-        ax.clear()
-    ax.axis("off")
-    ax.axvline(x=time_stamp)

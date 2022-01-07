@@ -17,3 +17,8 @@ def produce_combined_wav(files, path):
         out_f.setsampwidth(res.sample_width)
         out_f.setframerate(res.frame_rate)
         out_f.writeframesraw(res.raw_data)
+
+
+def get_plot_data_from_wav(file):
+    f = pydub.AudioSegment.from_wav(file)
+    return f.frame_width, f.frame_count(), f.duration_seconds
