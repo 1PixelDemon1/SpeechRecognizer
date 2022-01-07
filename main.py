@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QLabel, QHBoxLayout, QWidget, QVBoxLayout
+import matplotlib.pyplot as plt
 
 from matplotlib.backends.backend_template import FigureCanvas
 
@@ -32,6 +33,7 @@ class mywindow(QtWidgets.QMainWindow):
 
     # Wav only.
     def fill_plots(self, files):
+        plt.close("all")
         self._clear_layout(self.plotLayout)
         for file in files:
             self.plotLayout.addWidget(plot_handler.get_plot(file))

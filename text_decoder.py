@@ -38,22 +38,32 @@ _temp = {
 
 }
 
-splitters = [".", ",", " ", ";", ":"]
+splitters = [".", ",", " ", ";", ":", ""]
 
-# На дороге было тихо
-# на
-# дороге
-# на дороге
+
+def _check_separator(ind, word_len, text):
+    if word_len == 1:
+        return True
+    elif ind + word_len == len(text):
+        return True
+    elif ind == 0:
+        return text[ind + word_len] in splitters
+    else:
+        return text[ind - 1] in splitters and text[ind + word_len] in splitters
 
 
 def decode(text):
     filenames = []
     file_dict = {}
     text = text.lower()
+
     for key in sorted(_temp.keys(), key=len, reverse=True):
-        while ~(ind := text.find(key)):
-            file_dict[ind] = key
-            text = text.replace(key, "_"*len(key), 1)
+        ind = 0
+        while ~(ind := text.find(key, ind)):
+            if _check_separator(ind, len(key), text):
+                file_dict[ind] = key
+                text = text.replace(key, " "*len(key), 1)
+            ind += 1
 
     for i in sorted(file_dict):
         filenames.append(_temp[file_dict[i]])
