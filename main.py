@@ -11,6 +11,7 @@ import audio_line_thread
 import globals
 import text_decoder
 from main_window import Ui_MainWindow
+from plot_widget import Ui_Form
 import plot_handler
 import sys
 
@@ -36,7 +37,11 @@ class mywindow(QtWidgets.QMainWindow):
         plt.close("all")
         self._clear_layout(self.plotLayout)
         for file in files:
-            self.plotLayout.addWidget(plot_handler.get_plot(file))
+            plt_widget = QWidget()
+            # TODO add action
+            Ui_Form().setupUi(plt_widget, file, plot_handler.get_plot(file))
+
+            self.plotLayout.addWidget(plt_widget)
         self.update_plot(files)
 
     def update_plot(self, files):
@@ -67,7 +72,6 @@ class mywindow(QtWidgets.QMainWindow):
 
 app = QtWidgets.QApplication([])
 application = mywindow()
-# application.fill_plots([f"resources/gen-{i}.wav" for i in range(6, 12)])
 
 application.show()
 sys.exit(app.exec())
