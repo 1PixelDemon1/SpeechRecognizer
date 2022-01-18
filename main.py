@@ -1,6 +1,8 @@
+import os
+
 from PyQt5 import QtWidgets, QtCore, QtGui
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QLabel, QHBoxLayout, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QLabel, QHBoxLayout, QWidget, QVBoxLayout, QFileDialog
 import matplotlib.pyplot as plt
 
 from matplotlib.backends.backend_template import FigureCanvas
@@ -30,22 +32,22 @@ class mywindow(QtWidgets.QMainWindow):
         self.wavLayout = QVBoxLayout()
         self.res_plot = None
         self.res_audio_axis = None
-        self.test_button.clicked.connect(self._start_play)
+        self.test_button.clicked.connect(self._setup_plots)
+        self.ui.playButton.clicked.connect(self._start_play)
+
+        # Relation between plot and file: plt => (ind of file in self.files)
+        self.plot_file_dict = {}
 
     # Wav only.
-    def fill_plots(self, files):
+    def fill_plots(self):
         plt.close("all")
         self._clear_layout(self.plotLayout)
-        for file in files:
-            plt_widget = QWidget()
-            # TODO add action
-            Ui_Form().setupUi(plt_widget, file, plot_handler.get_plot(file))
+        for file_ind in range(len(self.files)):
+            self.plotLayout.addWidget(self._produce_widget(file_ind))
+        self.update_plot()
 
-            self.plotLayout.addWidget(plt_widget)
-        self.update_plot(files)
-
-    def update_plot(self, files):
-        audio_handler.produce_combined_wav(files, globals.RESULT_DESTINATION)
+    def update_plot(self):
+        audio_handler.produce_combined_wav(self.files, globals.RESULT_DESTINATION)
         self.res_plot = plot_handler.get_plot(globals.RESULT_DESTINATION)
         self._clear_layout(self.wavLayout)
         self.wavLayout.addLayout(self.plotLayout)
@@ -53,6 +55,23 @@ class mywindow(QtWidgets.QMainWindow):
         w = QWidget()
         w.setLayout(self.wavLayout)
         self.ui.scrollArea.setWidget(w)
+
+    def update_widgets(self, wid, plot):
+        fname = QFileDialog.getOpenFileName(self, 'Open file',
+                                            os.getcwd() + '/resources', "Audio files (*.wav)")
+        if fname[0]:
+            self.files[self.plot_file_dict[wid]] = fname[0]
+            plot.close()
+            wid.close()
+            self.plotLayout.replaceWidget(wid, self._produce_widget(self.plot_file_dict[wid]))
+            self.update_plot()
+
+    def _setup_plots(self):
+        text = self.ui.plainTextEdit.toPlainText()
+        if not text:
+            return
+        self.files = text_decoder.decode(text)
+        self.fill_plots()
 
     def _clear_layout(self, layout):
         for i in reversed(range(layout.count())):
@@ -62,13 +81,16 @@ class mywindow(QtWidgets.QMainWindow):
                 layout.itemAt(i).layout().setParent(None)
 
     def _start_play(self):
-        self.fill_plots(text_decoder.decode(self.ui.plainTextEdit.toPlainText()))
-
         audio_line_thread.scroller(self.ui.scrollArea,
                                    audio_handler.get_plot_data_from_wav(globals.RESULT_DESTINATION)).start()
 
         speeker_thread.speeker(globals.RESULT_DESTINATION).start()
 
+    def _produce_widget(self, file_ind):
+        plt_widget = QWidget()
+        Ui_Form().setupUi(plt_widget, self.files[file_ind], plot_handler.get_plot(self.files[file_ind]), self)
+        self.plot_file_dict[plt_widget] = file_ind
+        return plt_widget
 
 app = QtWidgets.QApplication([])
 application = mywindow()
