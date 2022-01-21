@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 from matplotlib.backends.backend_template import FigureCanvas
 
+import action_handler
 import speeker_thread
 import audio_handler
 import audio_line_thread
@@ -34,6 +35,9 @@ class mywindow(QtWidgets.QMainWindow):
         self.res_audio_axis = None
         self.test_button.clicked.connect(self._setup_plots)
         self.ui.playButton.clicked.connect(self._start_play)
+
+        self.ui.save_action.triggered.connect(lambda : action_handler.on_save_action(self))
+        self.ui.save_as_action.triggered.connect(lambda : action_handler.on_save_as_action(self))
 
         # Relation between plot and file: plt => (ind of file in self.files)
         self.plot_file_dict = {}
@@ -72,6 +76,9 @@ class mywindow(QtWidgets.QMainWindow):
             return
         self.files = text_decoder.decode(text)
         self.fill_plots()
+        self.ui.save_action.setEnabled(True)
+        self.ui.save_as_action.setEnabled(True)
+
 
     def _clear_layout(self, layout):
         for i in reversed(range(layout.count())):

@@ -141,8 +141,57 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="locale">
+     <locale language="Russian" country="Russia"/>
+    </property>
+    <property name="title">
+     <string>Файл</string>
+    </property>
+    <addaction name="open_action"/>
+    <addaction name="separator"/>
+    <addaction name="save_action"/>
+    <addaction name="save_as_action"/>
+   </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="save_action">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="save_as_action">
+   <property name="text">
+    <string>Сохранить как</string>
+   </property>
+  </action>
+  <action name="open_action">
+   <property name="text">
+    <string>Открыть файл</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>Изменить оформление</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Добавить зависимость</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
