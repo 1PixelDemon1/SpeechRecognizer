@@ -38,7 +38,7 @@ class mywindow(QtWidgets.QMainWindow):
 
         self.ui.save_action.triggered.connect(lambda : action_handler.on_save_action(self))
         self.ui.save_as_action.triggered.connect(lambda : action_handler.on_save_as_action(self))
-
+        self.ui.open_action.triggered.connect(lambda : action_handler.on_open_action(self))
         # Relation between plot and file: plt => (ind of file in self.files)
         self.plot_file_dict = {}
 
