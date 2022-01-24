@@ -5,7 +5,7 @@ import simpleaudio as sa
 class speeker(Thread):
     def __init__(self, file_name):
         super(speeker, self).__init__()
-        self.setDaemon(True)
+        self.daemon = True
         self.file_name = file_name
 
     def run(self):
