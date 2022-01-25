@@ -9,9 +9,9 @@ import globals
 
 def on_open_action(main_widget):
     fname = QFileDialog.getOpenFileName(main_widget, 'Open file',
-                                        os.getcwd() + r"/text sources", "Text files (*.txt, *.rtf)")
+                                        os.getcwd() + r"/text sources", "Text files (*.txt *.rtf)")
     if fname[0]:
-        with open(fname[0], "r") as text_file:
+        with open(fname[0], "r", encoding="UTF8") as text_file:
             rtf = "some rtf encoded string"
             text = text_file.read()
             # rtf needs some extra converting.
