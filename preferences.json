@@ -1,0 +1,19 @@
+{
+    "PLOT_FACE_COLOR": [
+        0.29411764705882354,
+        0.29411764705882354,
+        0.29411764705882354
+    ],
+    "PLOT_LINE_COLOR": [
+        255,
+        255,
+        255
+    ],
+    "APP_COLOR": [
+        53,
+        53,
+        53
+    ],
+    "RESULT_DESTINATION": "resources/result.wav",
+    "SAVE_DESTINATION": ""
+}

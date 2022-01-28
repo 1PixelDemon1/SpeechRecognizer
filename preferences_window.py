@@ -92,5 +92,5 @@ class Ui_Dialog(object):
         self.label.setText(_translate("Dialog", "Цвет приложеня"))
         self.label_2.setText(_translate("Dialog", "Цвет фона звуковой волны"))
         self.label_3.setText(_translate("Dialog", "Цвет звуковой волны"))
-        self.ok_button.setText(_translate("Dialog", "Применить"))
+        self.ok_button.setText(_translate("Dialog", "Сохранить"))
         self.cancelButton.setText(_translate("Dialog", "Отмена"))

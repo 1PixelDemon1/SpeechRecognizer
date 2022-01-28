@@ -163,7 +163,7 @@
        <item>
         <widget class="QPushButton" name="ok_button">
          <property name="text">
-          <string>Применить</string>
+          <string>Сохранить</string>
          </property>
         </widget>
        </item>

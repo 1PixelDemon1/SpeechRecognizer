@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'SpeechRecognizer.ui'
+# Form implementation generated from reading ui file '.\SpeechRecognizer.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -48,7 +48,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1206, 268))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1208, 284))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout.addWidget(self.scrollArea)
@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addItem(spacerItem3)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1232, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1232, 26))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setLocale(QtCore.QLocale(QtCore.QLocale.Russian, QtCore.QLocale.Russia))
@@ -71,20 +71,20 @@ class Ui_MainWindow(object):
         self.save_action.setEnabled(False)
         self.save_action.setObjectName("save_action")
         self.save_as_action = QtWidgets.QAction(MainWindow)
-        self.save_as_action.setObjectName("save_as_action")
         self.save_as_action.setEnabled(False)
+        self.save_as_action.setObjectName("save_as_action")
         self.open_action = QtWidgets.QAction(MainWindow)
         self.open_action.setObjectName("open_action")
-        self.action = QtWidgets.QAction(MainWindow)
-        self.action.setObjectName("action")
-        self.action_2 = QtWidgets.QAction(MainWindow)
-        self.action_2.setObjectName("action_2")
+        self.preferences_action = QtWidgets.QAction(MainWindow)
+        self.preferences_action.setObjectName("preferences_action")
+        self.add_relation_action = QtWidgets.QAction(MainWindow)
+        self.add_relation_action.setObjectName("add_relation_action")
         self.menuFile.addAction(self.open_action)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.save_action)
         self.menuFile.addAction(self.save_as_action)
-        self.menu.addAction(self.action)
-        self.menu.addAction(self.action_2)
+        self.menu.addAction(self.preferences_action)
+        self.menu.addAction(self.add_relation_action)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menu.menuAction())
 
@@ -101,5 +101,5 @@ class Ui_MainWindow(object):
         self.save_action.setText(_translate("MainWindow", "Сохранить"))
         self.save_as_action.setText(_translate("MainWindow", "Сохранить как"))
         self.open_action.setText(_translate("MainWindow", "Открыть файл"))
-        self.action.setText(_translate("MainWindow", "Изменить оформление"))
-        self.action_2.setText(_translate("MainWindow", "Добавить зависимость"))
+        self.preferences_action.setText(_translate("MainWindow", "Изменить оформление"))
+        self.add_relation_action.setText(_translate("MainWindow", "Добавить зависимость"))
