@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_template import FigureCanvas
 
 import action_handler
+import encryptor_dialog
 import speeker_thread
 import audio_handler
 import audio_line_thread
@@ -55,6 +56,10 @@ class mywindow(QtWidgets.QMainWindow):
             self.dialog = preferences_dialog.preferences(self)
             self.dialog.show()
         self.ui.preferences_action.triggered.connect(foo)
+        def bar():
+            self.encrypt_dialog = encryptor_dialog.encryptor()
+            self.encrypt_dialog.show()
+        self.ui.add_relation_action.triggered.connect(bar)
 
         self.files = None
         # Relation between plot and file: plt => (ind of file in self.files)

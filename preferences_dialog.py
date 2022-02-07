@@ -1,7 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QColorDialog
-
 import globals
 import styler
 from preferences_window import Ui_Dialog

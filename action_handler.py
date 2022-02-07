@@ -43,5 +43,7 @@ def on_save_as_action(main_widget):
         try:
             copyfile(globals.data["RESULT_DESTINATION"], file_location[0])
             globals.data["SAVE_DESTINATION"] = file_location[0]
+            # TODO for future.
+            # globals.update_file()
         except FileNotFoundError as fnf:
             print(fnf.strerror)
