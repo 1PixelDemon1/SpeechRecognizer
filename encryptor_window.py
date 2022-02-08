@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\EncryptorDialog.ui'
+# Form implementation generated from reading ui file 'EncryptorDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -39,18 +39,18 @@ class Ui_Dialog(object):
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.path_button = QtWidgets.QPushButton(Dialog)
-        self.path_button.setEnabled(False)
+        self.path_button.setEnabled(True)
         self.path_button.setFlat(False)
         self.path_button.setObjectName("path_button")
         self.horizontalLayout.addWidget(self.path_button)
         self.add_button = QtWidgets.QPushButton(Dialog)
-        self.add_button.setEnabled(False)
+        self.add_button.setEnabled(True)
         self.add_button.setDefault(False)
         self.add_button.setFlat(False)
         self.add_button.setObjectName("add_button")
         self.horizontalLayout.addWidget(self.add_button)
         self.del_button = QtWidgets.QPushButton(Dialog)
-        self.del_button.setEnabled(False)
+        self.del_button.setEnabled(True)
         self.del_button.setObjectName("del_button")
         self.horizontalLayout.addWidget(self.del_button)
         self.verticalLayout.addLayout(self.horizontalLayout)

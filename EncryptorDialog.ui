@@ -68,7 +68,7 @@
      <item>
       <widget class="QPushButton" name="path_button">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>Путь</string>
@@ -81,7 +81,7 @@
      <item>
       <widget class="QPushButton" name="add_button">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>+</string>
@@ -97,7 +97,7 @@
      <item>
       <widget class="QPushButton" name="del_button">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string>-</string>

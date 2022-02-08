@@ -51,6 +51,7 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.open_action.triggered.connect(lambda : action_handler.on_open_action(self))
 
         self.dialog = None
+        self.encrypt_dialog = None
 
         def foo():
             self.dialog = preferences_dialog.preferences(self)
@@ -64,6 +65,13 @@ class mywindow(QtWidgets.QMainWindow):
         self.files = None
         # Relation between plot and file: plt => (ind of file in self.files)
         self.plot_file_dict = {}
+
+    def closeEvent(self, event):
+        if self.dialog is not None:
+            self.dialog.close()
+        if self.encrypt_dialog is not None:
+            self.encrypt_dialog.close()
+        event.accept()
 
     # Wav only.
     def fill_plots(self):
@@ -103,7 +111,6 @@ class mywindow(QtWidgets.QMainWindow):
         self.fill_plots()
         self.ui.save_action.setEnabled(True)
         self.ui.save_as_action.setEnabled(True)
-
 
     def _clear_layout(self, layout):
         for i in reversed(range(layout.count())):
