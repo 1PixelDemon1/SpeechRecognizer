@@ -2,7 +2,7 @@ import json
 import os
 
 
-splitters = [".", ",", " ", ";", ":", ""]
+splitters = [".", ",", " ", ";", ":", "", "\n"]
 
 
 def _check_separator(ind, word_len, text):
