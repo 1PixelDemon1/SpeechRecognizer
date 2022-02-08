@@ -20,20 +20,23 @@ def decode(text):
     with open(os.getcwd() + r"/data.json", "r") as read_file:
         data = json.load(read_file)
     filenames = []
-    file_dict = {}
     text = text.lower()
 
-    # TODO morph into queue
+    flag = True
+    while flag:
+        flag = False
+        for key in sorted(data.keys(), key=len, reverse=True):
+            ind = text.find(key)
 
-    for key in sorted(data.keys(), key=len, reverse=True):
-        ind = 0
-        while ~(ind := text.find(key, ind)):
-            if _check_separator(ind, len(key), text):
-                file_dict[ind] = key
-                text = text.replace(key, " "*len(key), 1)
-            ind += 1
+            if ind == -1:
+                continue
 
-    for i in sorted(file_dict):
-        filenames.append(data[file_dict[i]])
+            if (ind == 0 or all(i in splitters for i in text[0:ind])) and\
+                    _check_separator(ind, len(key), text):
 
-    return [file_name for file_name in filenames]
+                filenames.append(data[key])
+                text = text.replace(key, "", 1)
+                flag = True
+                break
+
+    return filenames
