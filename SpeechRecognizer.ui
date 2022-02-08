@@ -107,8 +107,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1206</width>
-         <height>268</height>
+         <width>1208</width>
+         <height>284</height>
         </rect>
        </property>
       </widget>
@@ -138,7 +138,7 @@
      <x>0</x>
      <y>0</y>
      <width>1232</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -157,8 +157,8 @@
     <property name="title">
      <string>Настройки</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
+    <addaction name="preferences_action"/>
+    <addaction name="add_relation_action"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu"/>
@@ -173,6 +173,9 @@
    </property>
   </action>
   <action name="save_as_action">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Сохранить как</string>
    </property>
@@ -182,12 +185,12 @@
     <string>Открыть файл</string>
    </property>
   </action>
-  <action name="action">
+  <action name="preferences_action">
    <property name="text">
     <string>Изменить оформление</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="add_relation_action">
    <property name="text">
     <string>Добавить зависимость</string>
    </property>

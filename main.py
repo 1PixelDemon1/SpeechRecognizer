@@ -8,11 +8,15 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_template import FigureCanvas
 
 import action_handler
+import encryptor_dialog
 import speeker_thread
 import audio_handler
 import audio_line_thread
 import globals
+import styler
 import text_decoder
+import preferences_dialog
+
 from main_window import Ui_MainWindow
 from plot_widget import Ui_Form
 import plot_handler
@@ -24,6 +28,12 @@ class mywindow(QtWidgets.QMainWindow):
         super(mywindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        styler.set_style(self, "background-color", styler.get_string_from_rgb(globals.data["APP_COLOR"]))
+        styler.add_style(self, "color", styler.get_text_color(globals.data["APP_COLOR"]))
+
+        styler.set_style(self.ui.menubar, "color", "black")
+        styler.add_style(self.ui.menubar, "background-color", "rgb(250, 250, 250)")
 
         self.ui.scrollArea.verticalScrollBar().setEnabled(False)
         self.ui.scrollArea.setWidgetResizable(True)
@@ -39,20 +49,43 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.save_action.triggered.connect(lambda : action_handler.on_save_action(self))
         self.ui.save_as_action.triggered.connect(lambda : action_handler.on_save_as_action(self))
         self.ui.open_action.triggered.connect(lambda : action_handler.on_open_action(self))
+
+        self.dialog = None
+        self.encrypt_dialog = None
+
+        def foo():
+            self.dialog = preferences_dialog.preferences(self)
+            self.dialog.show()
+        self.ui.preferences_action.triggered.connect(foo)
+        def bar():
+            self.encrypt_dialog = encryptor_dialog.encryptor()
+            self.encrypt_dialog.show()
+        self.ui.add_relation_action.triggered.connect(bar)
+
+        self.files = None
         # Relation between plot and file: plt => (ind of file in self.files)
         self.plot_file_dict = {}
+
+    def closeEvent(self, event):
+        if self.dialog is not None:
+            self.dialog.close()
+        if self.encrypt_dialog is not None:
+            self.encrypt_dialog.close()
+        event.accept()
 
     # Wav only.
     def fill_plots(self):
         plt.close("all")
         self._clear_layout(self.plotLayout)
         for file_ind in range(len(self.files)):
-            self.plotLayout.addWidget(self._produce_widget(file_ind))
+            wid = self._produce_widget(file_ind)
+            styler.set_style(wid, "background-color", "transparent")
+            self.plotLayout.addWidget(wid)
         self.update_plot()
 
     def update_plot(self):
-        audio_handler.produce_combined_wav(self.files, globals.RESULT_DESTINATION)
-        self.res_plot = plot_handler.get_plot(globals.RESULT_DESTINATION)
+        audio_handler.produce_combined_wav(self.files, globals.data["RESULT_DESTINATION"])
+        self.res_plot = plot_handler.get_plot(globals.data["RESULT_DESTINATION"])
         self._clear_layout(self.wavLayout)
         self.wavLayout.addLayout(self.plotLayout)
         self.wavLayout.addWidget(self.res_plot)
@@ -79,7 +112,6 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.save_action.setEnabled(True)
         self.ui.save_as_action.setEnabled(True)
 
-
     def _clear_layout(self, layout):
         for i in reversed(range(layout.count())):
             try:
@@ -89,9 +121,9 @@ class mywindow(QtWidgets.QMainWindow):
 
     def _start_play(self):
         audio_line_thread.scroller(self.ui.scrollArea,
-                                   audio_handler.get_plot_data_from_wav(globals.RESULT_DESTINATION)).start()
+                                   audio_handler.get_plot_data_from_wav(globals.data["RESULT_DESTINATION"])).start()
 
-        speeker_thread.speeker(globals.RESULT_DESTINATION).start()
+        speeker_thread.speeker(globals.data["RESULT_DESTINATION"]).start()
 
     def _produce_widget(self, file_ind):
         plt_widget = QWidget()
@@ -99,6 +131,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.plot_file_dict[plt_widget] = file_ind
         return plt_widget
 
+
+globals.update_params()
 app = QtWidgets.QApplication([])
 application = mywindow()
 
